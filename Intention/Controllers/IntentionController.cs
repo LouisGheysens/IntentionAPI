@@ -13,22 +13,22 @@ public class IntentionController : IntentionBaseController
 {
     private readonly IIntentionService _intentionService;
 
-    public IntentionController(IIntentionService person,
+    public IntentionController(IIntentionService intention,
     ServiceResponse<object> serviceResponse)
     {
-        this._intentionService = person;
+        this._intentionService = intention;
         ServiceResponse = serviceResponse ?? throw new ArgumentNullException(nameof(serviceResponse));
     }
 
     [HttpGet(ApiRoutes.GetAll)]
-    public async Task<IActionResult> GetAllPersons([FromQuery] GridifyQuery query)
+    public async Task<IActionResult> GetAllIntentions([FromQuery] GridifyQuery query)
     {
         var response = await _intentionService.GetChallengesAsync(query, Token);
         return !response.Success ? (IActionResult)BadRequest(response) : Ok(response);
     }
 
     [HttpGet(ApiRoutes.Get)]
-    public async Task<IActionResult> GetPerson([FromRoute] int id)
+    public async Task<IActionResult> GetIntention([FromRoute] int id)
     {
         var response = await _intentionService.GetChallenge(id, Token);
         return !response.Success ? (IActionResult)BadRequest(response) : Ok(response);
@@ -36,7 +36,7 @@ public class IntentionController : IntentionBaseController
 
 
     [HttpPost(ApiRoutes.Save), DisableRequestSizeLimit]
-    public async Task<IActionResult> PostPerson([FromBody] ChallengeDto dto)
+    public async Task<IActionResult> PostIntention([FromBody] ChallengeDto dto)
     {
         var response = await _intentionService.AddChallenge(dto, Token);
         return !response.Success ? (IActionResult)BadRequest(response) : Ok(response);
@@ -44,7 +44,7 @@ public class IntentionController : IntentionBaseController
 
 
     [HttpPut(ApiRoutes.Update)]
-    public async Task<IActionResult> UpdatePerson([FromRoute] int id, [FromBody] ChallengeDto dto)
+    public async Task<IActionResult> UpdateIntention([FromRoute] int id, [FromBody] ChallengeDto dto)
     {
         var response = await _intentionService.UpdateChallenge(id, dto, Token);
         return !response.Success ? (IActionResult)BadRequest(response) : Ok(response);
@@ -52,7 +52,7 @@ public class IntentionController : IntentionBaseController
 
 
     [HttpDelete(ApiRoutes.Delete)]
-    public async Task<IActionResult> DeletePerson([FromRoute] int id)
+    public async Task<IActionResult> DeleteIntention([FromRoute] int id)
     {
         var response = await _intentionService.DeleteChallenge(id, Token);
         return !response.Success ? (IActionResult)BadRequest(response) : Ok(response);
